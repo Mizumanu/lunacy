@@ -1,0 +1,111 @@
+/* ——— STATS VIEW component ——— */
+@layer components.stats-view {
+  /* Container & layout */
+  #view-stats {
+    position: relative;
+  }
+
+  #stats-container {
+    display: flex;
+    padding: var(--space-md); /* was 20px */
+  }
+
+  #stats-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm); /* was 10px */
+    margin-right: var(--space-md);
+  }
+
+  #stats-content {
+    flex: 1;
+  }
+
+  /* Tabs */
+  .stats-tab {
+    background: transparent;
+    border: none;
+    color: var(--color-text);
+    font-size: var(--fs-sm); /* was 14px */
+    cursor: pointer;
+    opacity: 0.6;
+    transition:
+      opacity 0.3s,
+      text-shadow 0.3s;
+  }
+
+  .stats-tab.active {
+    opacity: 1;
+    text-shadow: var(--shadow-neon-text);
+  }
+
+  /* Info header icon */
+  #stats-info-header .info-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--fs-md); /* ~1.25rem (~20px) */
+    height: var(--fs-md);
+    border: 1px solid rgb(255 255 255 / 70%);
+    border-radius: 50%;
+    box-shadow: var(--shadow-neon-box);
+    color: var(--color-text);
+  }
+
+  /* Title */
+  #stats-title {
+    margin-bottom: var(--space-sm);
+    font-size: var(--fs-md); /* ~1.25rem (20px) */
+  }
+
+  /* Graph grid */
+  #stats-graphs {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    gap: var(--space-md);
+    justify-content: center;
+  }
+
+  /* Hide all graphs by default */
+  #stats-graphs > canvas {
+    display: none !important;
+  }
+
+  /* “All” view: show only the square */
+  #view-stats.section-all #stats-graphs > #square-stats {
+    display: block !important;
+    width: 360px;
+    height: 360px;
+    margin: 0 auto;
+  }
+
+  /* For any other view, hide the square */
+  #view-stats.section-all #stats-graphs > :not(#square-stats) {
+    display: none !important;
+  }
+
+  /* Section-specific: show only the one radar */
+  #view-stats.section-main #stats-graphs > #radar-main,
+  #view-stats.section-important #stats-graphs > #radar-important,
+  #view-stats.section-efficiency #stats-graphs > #radar-efficiency,
+  #view-stats.section-health #stats-graphs > #radar-health {
+    display: block !important;
+    width: 300px !important;
+    height: 300px !important;
+  }
+
+  /* And hide all non-matching radars */
+  #view-stats.section-main #stats-graphs > :not(#radar-main),
+  #view-stats.section-important #stats-graphs > :not(#radar-important),
+  #view-stats.section-efficiency #stats-graphs > :not(#radar-efficiency),
+  #view-stats.section-health #stats-graphs > :not(#radar-health) {
+    display: none !important;
+  }
+
+  /* Transparent backgrounds for consistency */
+  #stats-content,
+  .stats-tab,
+  #stats-info-header {
+    background: transparent;
+  }
+} /* end @layer components.stats-view */

@@ -1,0 +1,67 @@
+.events-container {
+  display: flex;
+  width: 100%;
+  min-height: 440px;
+  max-width: 940px;
+  margin: 36px auto;
+  background: transparent;
+}
+
+.events-main {
+  position: relative;
+  flex: 1;
+  background: var(--color-surface);
+  border-radius: 0 16px 16px 0;
+  padding: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 440px;
+
+  /* default bg, will be replaced by JS */
+}
+
+.events-main__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-position: center;
+  background-size: cover;
+  opacity: 0.68;
+  border-radius: 0 16px 16px 0;
+}
+
+.events-header {
+  position: relative;
+  z-index: 2;
+  padding: 36px 44px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.events-header h2 {
+  font-size: 2.1rem;
+  color: #fff;
+  margin-bottom: 8px;
+  font-family: var(--font-main);
+  text-shadow: var(--shadow-neon-text);
+  letter-spacing: 0.03em;
+}
+
+.events-header .events-timer {
+  font-size: 1.13rem;
+  color: #8ff9f9;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+.events-info {
+  position: relative;
+  z-index: 2;
+  padding: 0 44px 14px;
+  font-size: 1.14rem;
+  color: #caf7ff;
+  text-shadow: 0 1px 7px #022d33a3;
+  font-family: var(--font-main);
+}

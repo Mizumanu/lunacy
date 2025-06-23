@@ -1,0 +1,147 @@
+/* ——— QUEST OVERLAY component ——— */
+
+/* app/style/components/quest-overlay.css */
+@layer components.quest-overlay;
+
+/* 1) Full-screen semi-opaque backdrop */
+#quest-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgb(0 0 0 / 90%);
+  display: none;
+  z-index: 999;
+}
+
+/* 1.1) Show as flex container when active */
+#quest-overlay:not(.hidden) {
+  display: flex;
+  align-items: stretch; /* allow children to fill height */
+}
+
+/* 2) Layout: sidebar + content row */
+#quest-menu {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+/* 3) Sidebar: fixed width, vertical stack */
+#quest-sidebar {
+  flex: 0 0 var(--space-xxl); /* ~64px */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--space-md) 0; /* ~24px top/bottom */
+  gap: var(--space-sm); /* ~16px between tabs */
+}
+
+/* 4) Main content: fills remaining space */
+#quest-content {
+  flex: 1;
+  padding: var(--space-lg); /* ~32px all around */
+  position: relative;
+  overflow-y: auto;
+}
+
+/* 5) Tab buttons */
+#quest-sidebar .quest-tab {
+  background: transparent;
+  border: none;
+  color: var(--color-text);
+  font-size: var(--fs-lg); /* ~1.5rem = 24px */
+  cursor: pointer;
+  opacity: 0.4;
+  transition: opacity var(--transition-fast);
+}
+
+#quest-sidebar .quest-tab.active {
+  opacity: 1 !important;
+}
+
+/* glow only the icon inside active tab */
+#quest-sidebar .quest-tab.active .u-neon-icon {
+  text-shadow:
+    0 0 var(--space-xxs) var(--color-text),
+    0 0 var(--space-md) var(--color-accent);
+}
+
+#quest-sidebar .quest-tab:not(.active) {
+  box-shadow: none !important;
+}
+
+/* 6) Close button */
+#close-quest-overlay {
+  position: absolute;
+  top: var(--space-md); /* ~24px */
+  right: var(--space-md);
+  background: transparent;
+  border: none;
+  color: var(--color-text);
+  font-size: var(--fs-lg); /* ~24px */
+  cursor: pointer;
+}
+
+/* 7) Step dividers */
+#quest-steps ul {
+  list-style: none;
+  margin: var(--space-sm) 10%; /* ~16px vertical, 10% horizontal */
+  padding: var(--space-xs) 0; /* ~8px vertical padding */
+  border-top: 2px solid var(--color-grey) !important;
+  border-bottom: 2px solid var(--color-grey) !important;
+}
+
+/* item layout */
+#quest-steps li {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  align-items: center;
+  margin: var(--space-xs) 0; /* ~8px vertical gap */
+}
+
+#quest-steps li label {
+  flex: 1;
+  text-align: left;
+  white-space: normal;
+  padding: 0;
+}
+
+#quest-steps li input[type='checkbox'] {
+  flex: 0 0 auto;
+  margin-left: var(--space-xs);
+}
+
+/* 8) Complete Quest button */
+#complete-quest {
+  margin-top: var(--space-md); /* ~24px */
+  padding: var(--space-xs) var(--space-sm);
+  border: 2px solid rgb(255 255 255 / 50%);
+  border-radius: var(--space-xxs); /* ~4px */
+  background: rgb(0 0 0 / 60%);
+  color: var(--color-text);
+  cursor: not-allowed;
+  transition:
+    background var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+#complete-quest:not(:disabled) {
+  background: var(--color-text);
+  color: var(--color-bg);
+  box-shadow: var(--shadow-neon-box);
+  cursor: pointer;
+}
+
+/* 9) Completed quest items */
+.quest-item.completed {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* 10) Subtitles within overlay */
+.sub-title {
+  margin: var(--space-md) 0 var(--space-xs);
+  font-size: 1.1em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}

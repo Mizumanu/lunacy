@@ -1,0 +1,43 @@
+/* Hide the old single-event-card and grid if still present */
+#events-list > .event-card,
+#events-list > .event-status-expired {
+  display: none !important;
+}
+
+#event-detail-overlay {
+  position: fixed;
+  z-index: 40;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgb(14 22 38 / 68%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.22s;
+}
+
+#event-detail-overlay.hidden {
+  display: none;
+}
+
+.event-detail-modal-panel {
+  background: rgb(18 27 48 / 99%);
+  border-radius: 17px;
+  min-width: 610px;
+  max-width: 96vw;
+  min-height: 390px;
+  max-height: 88vh;
+  padding: 0;
+  box-shadow: 0 4px 52px #17c8ff66;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+}
+
+.section-days-sidebar.wide {
+  width: 168px;
+  min-width: 150px;
+  max-width: 210px;
+}

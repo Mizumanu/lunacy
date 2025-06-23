@@ -1,0 +1,7 @@
+npm test
+npm run lint
+npm run lint -- --fix
+npm format
+npm run build
+npm run lint:css
+npm run tree

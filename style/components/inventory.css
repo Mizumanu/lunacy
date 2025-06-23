@@ -1,0 +1,219 @@
+/* style/components/inventory.css */
+
+@layer components.inventory;
+
+/* 1) Full view: flex column under header */
+#view-inventory {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* 2) Header retains its own height */
+#view-inventory .panel-header {
+  flex: 0 0 auto;
+}
+
+/* 3) Content area: two columns */
+#view-inventory .inventory-panel {
+  display: flex;
+  flex: 1 1 auto;
+  overflow: hidden;
+}
+
+/* 4) Left side: grid container */
+.inventory-grid-container {
+  flex: 3;
+  overflow-y: auto;
+  margin: 0;
+  padding: 0;
+}
+
+.inventory-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-auto-rows: 72px; /* can be var’d later */
+  gap: var(--space-xs);
+}
+
+/* 5) Item cards */
+.inventory-item {
+  position: relative;
+  background: rgb(255 255 255 / 5%) center/contain no-repeat;
+  border: 1px solid var(--color-accent-dark);
+  border-radius: var(--space-xxs);
+  cursor: pointer;
+  transition: transform var(--transition-fast) ease-in-out;
+}
+
+.inventory-item:hover {
+  transform: scale(1.05);
+}
+
+/* 6) Quantity badge */
+.inventory-item::after {
+  content: '×' attr(data-count);
+  position: absolute;
+  bottom: var(--space-xxs);
+  right: var(--space-xxs);
+  font: var(--fs-xxs) / 1 var(--font-main);
+  color: var(--color-text);
+}
+
+/* 7) Right side: detail panel */
+.inventory-details {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  margin: var(--space-xs);
+  padding: var(--space-md);
+  border-left: 1px solid var(--color-text);
+  background: rgb(0 0 0 / 80%);
+  overflow-y: auto;
+}
+
+.inventory-details.hidden {
+  display: none;
+}
+
+/* 8) Detail content */
+.inventory-details h3 {
+  font: var(--fs-lg) / 1 var(--font-main);
+  color: var(--color-text);
+  margin: 0 0 var(--space-sm);
+  text-transform: uppercase;
+}
+
+.inventory-details img {
+  width: 96px;
+  height: 96px;
+  margin: 0 auto var(--space-sm);
+}
+
+.inventory-details p {
+  font: var(--fs-sm) / 1 var(--font-main);
+  color: var(--color-text);
+  margin: 0 0 var(--space-sm);
+}
+
+/* 9) Filter‐bar: vertically stack Keys & Runes */
+.inventory-filters {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  padding: var(--space-xs) var(--space-sm);
+}
+
+/* 10) Filter & Use Buttons base */
+.filter-btn,
+.use-btn {
+  background: transparent;
+  border: 1px solid var(--color-text);
+  border-radius: var(--space-xxs);
+  color: var(--color-text);
+  font-family: var(--font-main);
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: background var(--transition-fast) ease;
+}
+
+/* sizing */
+.filter-btn {
+  font-size: var(--fs-xxs);
+  padding: var(--space-xxs) var(--space-xs);
+}
+
+.use-btn {
+  font-size: var(--fs-xxs);
+  margin-top: var(--space-sm);
+  padding: var(--space-xs) var(--space-sm);
+}
+
+/* 11) Neon-glow only on the *active* filter */
+.filter-btn.active {
+  background: var(--color-text);
+  color: var(--color-bg);
+  box-shadow: var(--shadow-neon-box);
+  cursor: pointer;
+}
+
+/* 12) Use-item button always neon-glow (enabled state) */
+.use-btn {
+  background: var(--color-text);
+  color: var(--color-bg);
+  box-shadow: var(--shadow-neon-box);
+}
+
+@layer components.inventory-modal;
+
+/* 1) Modal container & backdrop */
+.inventory-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  z-index: 999;
+}
+
+.inventory-modal:not(.hidden) {
+  visibility: visible;
+  opacity: 1;
+}
+
+.inventory-modal .modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgb(0 0 0 / 75%);
+}
+
+/* 2) Content box (40% wider) */
+.inventory-modal .modal-content {
+  position: relative;
+  background: var(--bgd1) center/cover no-repeat;
+  padding: var(--space-lg);
+  box-shadow: none !important;
+  max-width: 504px; /* was 360px */
+  width: 90%;
+  border-radius: var(--space-xs);
+  z-index: 1;
+}
+
+/* 3) Two‐column body */
+.inventory-modal .modal-body {
+  display: flex;
+  gap: var(--space-md);
+  align-items: flex-start;
+}
+
+.inventory-modal .inventory-img {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.inventory-modal .inventory-img img {
+  max-width: 100%;
+  height: auto;
+}
+
+.inventory-modal .inventory-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+/*  center the header in the inventory view */
+#view-inventory .panel-header {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}

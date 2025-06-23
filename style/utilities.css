@@ -1,0 +1,121 @@
+@layer utilities.spacers;
+
+/* —— Margin Bottom —— */
+.mb-xxs {
+  margin-bottom: var(--space-xxs);
+}
+
+.mb-xs {
+  margin-bottom: var(--space-xs);
+}
+
+.mb-sm {
+  margin-bottom: var(--space-sm);
+}
+
+.mb-md {
+  margin-bottom: var(--space-md);
+}
+
+.mb-lg {
+  margin-bottom: var(--space-lg);
+}
+
+.mb-xl {
+  margin-bottom: var(--space-xl);
+}
+
+/* —— Padding —— */
+.p-xxs {
+  padding: var(--space-xxs);
+}
+
+.p-xs {
+  padding: var(--space-xs);
+}
+
+.p-sm {
+  padding: var(--space-sm);
+}
+
+.p-md {
+  padding: var(--space-md);
+}
+
+.p-lg {
+  padding: var(--space-lg);
+}
+
+.p-xl {
+  padding: var(--space-xl);
+}
+
+@layer utilities.layout;
+
+/* —— FLEX & GRID HELPERS —— */
+
+/* Centers children along both axes */
+.u-flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Simple grid container with a default gap */
+.u-grid {
+  display: grid;
+  gap: var(--space-md);
+}
+
+/* —— STACK HELPERS —— */
+
+/* Vertical stack with small gap */
+.u-stack-sm {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+/* Vertical stack with medium gap */
+.u-stack-md {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+/* —— FULL WIDTH HELPER —— */
+
+/* Stretch an element to fill its container’s width */
+.u-full {
+  width: 100%;
+}
+
+@layer utilities.effects;
+
+/* —— NEON BOX SHADOW —— */
+.u-neon-box {
+  box-shadow: var(--shadow-neon-box) !important;
+}
+
+/* —— NEON ICON SHADOW —— */
+.u-neon-icon {
+  filter: drop-shadow(0 0 2px var(--color-text)) drop-shadow(0 0 6px var(--color-primary));
+}
+
+/* —— PULSING ANIMATION —— */
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
+}
+
+.u-pulse {
+  animation: pulse 2s infinite ease-in-out;
+}

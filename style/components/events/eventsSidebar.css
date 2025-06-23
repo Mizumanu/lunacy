@@ -1,0 +1,46 @@
+.events-sidebar {
+  flex-shrink: 0;
+  min-width: 225px;
+  max-width: 260px;
+  background: rgb(10 15 30 / 97%);
+  border-radius: 16px 0 0 16px;
+  box-shadow: 0 0 18px 0 #03507e52;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding: 22px 0;
+  gap: 10px;
+}
+
+.event-btn {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 13px 14px;
+  font-size: 1.08rem;
+  border: none;
+  background: transparent;
+  color: var(--color-text);
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: var(--font-main);
+  transition:
+    background 0.19s,
+    box-shadow 0.17s,
+    color 0.17s;
+  outline: none;
+}
+
+.event-btn.active,
+.event-btn:hover {
+  background: rgb(30 110 180 / 23%);
+  color: #47edff;
+  box-shadow:
+    0 0 8px #23e8f4,
+    0 0 0 2px #25c5fa inset;
+}
+
+.event-btn i {
+  font-size: 1.4em;
+  color: #30e5ff;
+}

@@ -1,0 +1,74 @@
+/* ——— STATUS VIEW component ——— */
+@layer components.status-view;
+
+#status-level-container {
+  margin-bottom: var(--space-md); /* was 24px */
+  text-align: center;
+}
+
+#status-level-value {
+  /* still 6rem—the only size without a matching var */
+  font-size: 6rem;
+  line-height: 1;
+  text-shadow: var(--shadow-neon-text);
+}
+
+#status-level-text {
+  font-size: var(--fs-sm); /* 1rem */
+  text-transform: uppercase;
+  margin-top: calc(-1 * var(--space-xs)); /* was -8px */
+  text-shadow: var(--shadow-neon-text);
+}
+
+/* ─── XP BAR ──────────────────────────────────────────── */
+#xp-bar-container.status-xp {
+  width: 80% !important;
+  height: var(--space-xxs) !important; /* 4px */
+  margin: var(--space-md) auto !important; /* was 20px auto */
+  background: rgb(255 255 255 / 20%) !important;
+  border-radius: var(--space-xxs) !important; /* 4px */
+  overflow: hidden;
+  box-shadow: inset 0 0 4px rgb(0 0 0 / 50%);
+}
+
+#xp-bar-container.status-xp #xp-bar {
+  width: var(--); /* your JS sets this inline */
+  height: 100% !important;
+  background: var(--color-text) !important;
+  box-shadow: var(--shadow-neon-box);
+  transition: width 0.4s ease;
+}
+
+#xp-text {
+  margin-top: var(--space-xs); /* 8px */
+  text-shadow: var(--shadow-neon-text);
+  text-align: center;
+}
+
+/* ─── RANK BAR ────────────────────────────────────────── */
+#rank-bar-container.status-rank {
+  width: 30% !important;
+  height: 2px !important; /* 4px */
+  margin: var(--space-xs) auto !important; /* 8px auto */
+  background: rgb(255 255 255 / 20%) !important;
+  border-radius: var(--space-xxs) !important; /* 4px */
+  overflow: hidden;
+  box-shadow: inset 0 0 4px rgb(0 0 0 / 50%);
+}
+
+#rank-bar-container.status-rank #rank-bar {
+  width: var(--); /* your JS sets this inline */
+  height: 100% !important;
+  background: var(--color-text) !important;
+  box-shadow: var(--shadow-neon-box);
+  transition: width 0.4s ease;
+}
+
+#rank-text {
+  margin-top: var(--space-xxs); /* 4px */
+  font-size: var(--fs-xxs); /* 0.75rem */
+  color: var(--color-text);
+  text-align: center;
+  text-shadow: var(--shadow-neon-text);
+  letter-spacing: 0.08em;
+}

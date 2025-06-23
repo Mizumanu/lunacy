@@ -1,0 +1,188 @@
+// js/ui/events/eventsDayPanel.js
+import { DOM } from '../dom.js'
+
+import { showEventDetail } from './eventsMain.js'
+
+import { renderRewardIcon, renderEventCountdown } from './eventsUtils.js'
+
+import { notify } from '../../core/engine.js'
+// Renders the day-by-day sidebar and the task panel for a section
+
+/**
+ * Shows the day-by-day sidebar and task panel for a B/C section.
+ */
+export function renderSectionDayByDayPanel(container, event, section, selectedDay = 1) {
+  // Get all available days for this section
+  const days = Array.from(new Set(section.tasks.map((t) => t.day))).sort((a, b) => a - b)
+  // Default to today if possible
+  if (!selectedDay || !days.includes(selectedDay)) selectedDay = days[0]
+
+  // Sidebar: day list
+  const sidebar = document.createElement('div')
+  sidebar.className = 'section-days-sidebar wide'
+  days.forEach((day, idx) => {
+    const btn = document.createElement('button')
+    btn.className = 'section-day-btn' + (day === selectedDay ? ' active' : '')
+
+    // Use custom label if provided, else fallback to "Day X"
+    let customLabel = (section.dayLabels && section.dayLabels[idx]) || `Day ${day}`
+    btn.innerText = customLabel
+
+    btn.onclick = () => {
+      renderSectionDayByDayPage(event, section, day)
+    }
+    sidebar.appendChild(btn)
+  })
+  // Main area: tasks for that day
+  const main = document.createElement('div')
+  main.className = 'section-day-tasks-panel'
+  main.innerHTML = `<h3>Day ${selectedDay}</h3>`
+
+  // Task list
+  const tasks = section.tasks.filter((t) => t.day === selectedDay)
+  if (tasks.length === 0) {
+    main.innerHTML += `<div style="color:#aaa;padding:2em 0">No tasks for this day.</div>`
+  } else {
+    tasks.forEach((task) => {
+      const row = document.createElement('div')
+      row.className = 'event-task-row'
+      row.innerHTML = `
+      <span>${task.title || ''}</span>
+      <span class="reward-icon">${renderRewardIcon(task.reward)}</span>
+    `
+      main.appendChild(row)
+    })
+  }
+
+  // --- BUTTONS ROW ---
+  const buttonsRow = document.createElement('div')
+  buttonsRow.className = 'event-task-buttons-row'
+
+  // Find the first available URL in today's tasks
+  const firstUrl = tasks.find((t) => t.url)?.url
+  if (firstUrl) {
+    const linkBtn = document.createElement('button')
+    linkBtn.className = 'event-task-link-btn btn'
+    linkBtn.innerHTML = `<i class="fas fa-external-link-alt"></i>` // Font Awesome icon (or use your SVG)
+    linkBtn.title = 'Go to Task'
+    linkBtn.onclick = () => window.open(firstUrl, '_blank')
+    buttonsRow.appendChild(linkBtn)
+  }
+
+  const startBtn = document.createElement('button')
+  startBtn.className = 'event-start-btn'
+  startBtn.innerText = 'Start'
+  buttonsRow.appendChild(startBtn)
+
+  main.appendChild(buttonsRow)
+
+  // Compose the two columns
+  const flex = document.createElement('div')
+  flex.className = 'section-day-flex'
+  flex.appendChild(sidebar)
+  flex.appendChild(main)
+
+  container.appendChild(flex)
+}
+
+/**
+ * Replaces the events main panel with a full-page day-by-day view.
+ */
+export function renderSectionDayByDayPage(event, section, selectedDay = 1) {
+  const eventsList = DOM.viewEvents.querySelector('#events-list')
+  eventsList.innerHTML = '' // clear everything
+
+  // === Main day-by-day panel (full width) ===
+  const main = document.createElement('div')
+  main.className = 'events-main'
+
+  // Panel background
+  const bg = document.createElement('div')
+  bg.className = 'events-main__bg'
+  bg.style.backgroundImage = `url('/assets/events/${event.id}/speedPanel.png')`
+  main.appendChild(bg)
+
+  // Header
+  const header = document.createElement('div')
+  header.className = 'events-header'
+  header.innerHTML = `
+    <h2>${section.label}</h2>
+    <span class="events-timer">${renderEventCountdown(event)}</span>
+    <button class="event-detail-close-btn" style="position:absolute;top:32px;right:44px;font-size:2em" title="Back">&times;</button>
+  `
+  header.querySelector('.event-detail-close-btn').onclick = () =>
+    showEventDetail(event.id, section.id)
+  main.appendChild(header)
+
+  // Actual content (reuse your day-by-day logic)
+  const panel = document.createElement('div')
+  panel.style.position = 'relative'
+  renderSectionDayByDayPanel(panel, event, section, selectedDay)
+  main.appendChild(panel)
+
+  // Compose and render (NO SIDEBAR)
+  const container = document.createElement('div')
+  container.className = 'events-container'
+  container.appendChild(main)
+  eventsList.appendChild(container)
+}
+
+// Add at the top if needed:
+
+export function showTaskTimer(task, onComplete) {
+  // Remove existing timer modal if any
+  let prev = document.getElementById('event-task-timer-modal');
+  if (prev) prev.remove();
+
+  // Modal setup
+  const modal = document.createElement('div');
+  modal.id = 'event-task-timer-modal';
+  modal.className = 'event-task-timer-modal';
+
+  // Timer state
+  let elapsed = 0;
+  const totalSec = (task.timerMinutes || 1) * 60;
+
+  // Timer UI
+  const label = document.createElement('div');
+  label.className = 'event-task-timer-label';
+  label.innerText = `${task.title || 'Task'}\n(${task.timerMinutes} min)`;
+
+  const timerDisplay = document.createElement('div');
+  timerDisplay.className = 'event-task-timer-display';
+  timerDisplay.innerText = '00:00';
+
+  const closeBtn = document.createElement('button');
+  closeBtn.innerText = '✖';
+  closeBtn.className = 'timer-close-btn';
+  closeBtn.onclick = () => {
+    clearInterval(intv);
+    modal.remove();
+  };
+
+  modal.appendChild(label);
+  modal.appendChild(timerDisplay);
+  modal.appendChild(closeBtn);
+  document.body.appendChild(modal);
+
+  // Timer logic
+  function format(secs) {
+    const m = Math.floor(secs / 60);
+    const s = secs % 60;
+    return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+  }
+  timerDisplay.innerText = format(0);
+
+  const intv = setInterval(() => {
+    elapsed++;
+    timerDisplay.innerText = format(elapsed);
+    if (elapsed >= totalSec) {
+      clearInterval(intv);
+      timerDisplay.innerText = `✅ ${format(totalSec)} Complete!`;
+      setTimeout(() => modal.remove(), 1500);
+      // Award reward here, or call callback
+      if (typeof onComplete === 'function') onComplete(task);
+      notify('Task complete! Reward earned.');
+    }
+  }, 1000);
+}

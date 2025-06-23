@@ -1,0 +1,83 @@
+.events-section-row {
+  position: absolute;
+  left: 50%;
+  bottom: 36px;
+  z-index: 2;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 36px;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Section icon row, flex-split mode */
+.events-section-row.flex-split {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  width: 100%;
+  margin-top: 2.2em;
+  margin-bottom: 0.8em;
+
+  /* Add horizontal padding so groups don't hug the edges */
+  padding: 0 2.5em;
+  box-sizing: border-box;
+}
+
+.section-row-left,
+.section-row-right {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-lg);
+}
+
+.event-section-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #181f23;
+  border: 2.5px solid var(--color-primary);
+  box-shadow: 0 0 14px 2px #1bc5ff;
+  object-fit: cover;
+  filter: brightness(1.11) drop-shadow(0 0 7px #37d0f8);
+  opacity: 0.97;
+  transition:
+    border 0.2s,
+    filter 0.15s,
+    opacity 0.18s;
+}
+
+.event-section-icon.locked {
+  opacity: 0.33;
+  filter: grayscale(0.85) blur(1.2px) brightness(0.7);
+  border-color: #aaa;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.task-a-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;      /* left align */
+  padding-left: 36px;           /* adjust as needed for left gap */
+  padding-top: 7px;             /* top gap from panel title */
+  padding-bottom: 7px;
+  /* Optionally, add min-width: 300px; */
+}
+
+.task-title-a {
+  font-size: 1.13em;
+  font-weight: 600;
+  margin-bottom: 3px;
+  color: #fff;
+  letter-spacing: 0.02em;
+  text-align: left;
+}
+
+.task-desc-a {
+  font-size: 1em;
+  opacity: 0.78;
+  color: #b3e2fc;
+  margin-bottom: 2px;
+  text-align: left;
+}

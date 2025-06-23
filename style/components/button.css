@@ -1,0 +1,64 @@
+@layer components.button;
+
+/* ─── Base .btn reset ─────────────────────────────────────── */
+.btn {
+  margin-top: var(--space-md);
+  padding: var(--space-xs) var(--space-sm);
+  border: 2px solid rgb(255 255 255 / 50%);
+  border-radius: var(--space-xxs);
+  background: rgb(0 0 0 / 60%);
+  color: var(--color-text);
+  cursor: not-allowed;
+  transition:
+    background var(--transition-fast),
+    box-shadow var(--transition-fast);
+  font-family: var(--font-main);
+  font-size: var(--fs-sm);
+  font-weight: 100;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* ─── Neon-glow “enabled” state ──────────────────────────── */
+.btn:not(:disabled) {
+  background: var(--color-text);
+  color: var(--color-bg);
+  box-shadow: var(--shadow-neon-box);
+  cursor: pointer;
+}
+
+/* ─── Center the OK button in the notification ───────────── */
+#notification-modal .modal-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-md);
+}
+
+/* QUEST BUTTONS LAYOUT */
+#quest-buttons {
+  position: relative; /* so absolute children are positioned against it */
+  display: flex;
+  justify-content: center; /* center any non-absolute children */
+  align-items: center;
+  width: 100%;
+  margin-top: var(--space-md);
+}
+
+/* pin the URL (quest-link) to the left edge */
+#quest-link {
+  position: absolute;
+  left: var(--space-md);
+  margin: 0;
+
+  /* if you want it slightly smaller than the default button: */
+  padding: var(--space-xs) var(--space-sm);
+  font-size: var(--fs-xs);
+  border-width: 1px;
+}
+
+/* ensure your “Complete Quest” sits in the center */
+#complete-quest {
+  margin: 0; /* neutralize any side margins */
+
+  /* it will sit in the flex center by default */
+}

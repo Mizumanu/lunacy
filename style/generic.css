@@ -1,0 +1,45 @@
+/* style/generic.css */
+@import url('settings.css');
+
+/* —— RESET —— */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* —— BASE ELEMENTS —— */
+html,
+body {
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-main);
+  text-shadow: var(--shadow-neon-text);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+li,
+label,
+button,
+span {
+  color: var(--color-text);
+  text-shadow: var(--shadow-neon-text);
+}
+
+h2 {
+  text-transform: uppercase;
+}
+
+.hidden {
+  display: none !important;
+}

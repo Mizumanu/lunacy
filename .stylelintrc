@@ -1,0 +1,7 @@
+{
+  "extends": ["stylelint-config-standard", "stylelint-prettier/recommended"],
+  "rules": {
+    "selector-max-specificity": "0,3,0",
+    "value-list-max-empty-lines": 0
+  }
+}

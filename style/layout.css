@@ -1,0 +1,58 @@
+/* style/layout.css */
+@layer layout {
+  /* 1. CENTER SCREEN UTILITY */
+  .u-center-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* 2. BASE RESET */
+  html,
+  body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: var(--color-bg);
+  }
+
+  /* 3. GAME CONTAINER */
+  .game-container {
+    position: relative;
+    width: 100%;
+    max-width: var(--container-max);
+    padding: var(--space-md);
+    text-align: center;
+  }
+
+  /* 4. MENU PANEL */
+  .menu {
+    position: absolute;
+    top: var(--space-lg);
+    right: var(--space-lg);
+    background: var(--color-surface);
+    backdrop-filter: blur(var(--blur-md));
+    border-radius: var(--space-xs);
+    padding: var(--space-xs);
+    display: grid;
+    grid-auto-rows: var(--space-xxl);
+    gap: var(--space-xs);
+    transform: scaleY(0);
+    transform-origin: top right;
+    transition: transform var(--transition-fast) ease-out;
+    z-index: 150;
+  }
+
+  /* support both JS-toggled “open” and our BEM modifier */
+  .menu.open,
+  .menu--open {
+    transform: scaleY(1);
+  }
+
+  /* 5. RESPONSIVE ADJUSTMENTS */
+  @media (width >= 600px) {
+    .game-container {
+      padding: var(--space-lg);
+    }
+  }
+}

@@ -1,45 +1,246 @@
-<!--
-  Hit RUN to see this project in action!
-  
-  This project will auto-refresh as you edit the HTML, CSS and JS. See README.md for more info (including how to disable auto-refresh and install packages).
--->
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- 2. Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body class="u-center-screen">
+    <!-- QUEST OVERLAY -->
+    <div id="quest-overlay" class="hidden">
+      <div id="quest-menu">
+        <nav id="quest-sidebar">
+          <button data-cat="all" class="quest-tab active" title="All">
+            <i class="fas fa-list u-neon-icon"></i>
+          </button>
+          <button data-cat="main" class="quest-tab" title="Main">
+            <i class="fas fa-scroll u-neon-icon"></i>
+          </button>
+          <button id="new-main-quest" class="quest-tab" title="New Quest">
+            <i class="fas fa-plus u-neon-icon"></i>
+          </button>
+          <button data-cat="side" class="quest-tab" title="Side">
+            <i class="fas fa-crosshairs u-neon-icon"></i>
+          </button>
+          <button data-cat="daily" class="quest-tab" title="Daily">
+            <i class="fas fa-calendar-day u-neon-icon"></i>
+          </button>
+          <button data-cat="ascension" class="quest-tab" title="Ascension">
+            <i class="fas fa-key"></i>
+          </button>
+          <!-- <button data-cat="urgent" class="quest-tab" title="Urgent">
+          <i class="fas fa-bolt u-neon-icon"></i>
+        </button> -->
+        </nav>
 
-<!DOCTYPE html>
-<html>
+        <div id="quest-content" class="panel-bg">
+          <button id="close-quest-overlay" class="close-btn u-neon-icon">
+            <i class="fas fa-times"></i>
+          </button>
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
-  <title>Replit</title>
-  <link href="style.css" rel="stylesheet" type="text/css" />
-</head>
+          <div class="panel-header">
+            <span class="panel-header__icon">!</span>
+            <span class="panel-header__text">QUESTS</span>
+          </div>
 
-<body>
-  <main>
-    <h1 class="title">Welcome to HTML on Replit!</h1>
-    <p class="description">Get started by editing
-      <code class="code">index.html</code>. The webview will auto-refresh as you edit! (See <code
-        class="code">README.md</code> if you want to
-      disable auto-refresh.)
-    </p>
+          <h2 id="quest-list-title">All Quests</h2>
+          <div id="quest-list"></div>
+        </div>
+      </div>
+    </div>
 
-    <section class="grid">
-      <a href="https://replit.com/learn" class='card'>
-        <h2>Learn &rarr;</h2>
-        <p>Find tutorials on Replit to learn more.</p>
-      </a>
+    <!-- MAIN GAME UI -->
+    <div id="game-container" class="game-container">
+      <!-- QUEST ICON (hamburger) -->
+      <div id="quest-icon" class="quest-icon"><span></span><span></span><span></span></div>
 
-      <a href="https://docs.replit.com/category/deployments" class='card'>
-        <h2>Deploy &rarr;</h2>
-        <p>
-          After you are happy with this app, deploy it on Replit!
+      <!-- MENU ICON (3×3 dots) -->
+      <div id="menu-icon" class="menu-icon">
+        <span></span><span></span><span></span> <span></span><span></span><span></span> <span></span
+        ><span></span><span></span>
+      </div>
+
+      <!-- SLIDING PANEL MENU -->
+      <div id="menu" class="menu">
+        <button id="menu-quests" class="menu__item">Quests</button>
+        <button id="menu-stats" class="menu__item">Stats</button>
+        <button id="menu-status" class="menu__item">Status</button>
+        <button id="menu-events" class="menu__item">Events</button>
+        <button id="menu-inventory" class="menu__item">Inventory</button>
+      </div>
+
+      <!-- QUEST DETAIL VIEW -->
+      <div id="view-quests" class="panel-bg">
+        <div class="panel-header">
+          <span class="panel-header__icon">!</span>
+          <span class="panel-header__text">QUEST INFO</span>
+        </div>
+        <div id="main-quest">
+          <h2 id="quest-title">Quest Title</h2>
+          <p id="quest-description">Quest description here.</p>
+        </div>
+
+        <div id="quest-steps"></div>
+        <div id="quest-buttons">
+          <button id="complete-quest" disabled>Complete Quest</button>
+        </div>
+      </div>
+
+      <!-- ── Act Intro View ── -->
+      <div id="view-act" class="panel-bg hidden">
+        <div class="panel-header">
+          <span class="panel-header__icon">✦</span>
+          <span class="panel-header__text" id="act-title"></span>
+        </div>
+        <p id="act-tagline" class="panel-body-text"></p>
+        <button id="start-act" class="btn">Start Act</button>
+      </div>
+
+      <!-- STATS VIEW -->
+      <div id="view-stats" class="hidden section-all panel-bg">
+        <div id="stats-container">
+          <nav id="stats-sidebar">
+            <button data-section="all" class="stats-tab active">All</button>
+            <button data-section="main" class="stats-tab">Main</button>
+            <button data-section="important" class="stats-tab">Important</button>
+            <button data-section="efficiency" class="stats-tab">Efficiency</button>
+            <button data-section="health" class="stats-tab">Health</button>
+          </nav>
+          <div id="stats-content">
+            <div class="panel-header">
+              <span class="panel-header__icon">+</span>
+              <span class="panel-header__text">YOUR STATS</span>
+            </div>
+            <h2 id="stats-title">All Stats</h2>
+            <div id="stats-graphs">
+              <canvas id="square-stats" width="600" height="600" style="display: none"></canvas>
+              <canvas id="radar-main" width="240" height="240"></canvas>
+              <canvas id="radar-important" width="240" height="240"></canvas>
+              <canvas id="radar-efficiency" width="240" height="240"></canvas>
+              <canvas id="radar-health" width="240" height="240"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STATUS VIEW -->
+      <div id="view-status" class="hidden panel-bg">
+        <div class="panel-header">
+          <span class="panel-header__icon">%</span>
+          <span class="panel-header__text">STATUS</span>
+        </div>
+        <div id="status-level-container">
+          <div id="status-level-value">1</div>
+          <div id="status-level-text">LEVEL</div>
+        </div>
+        <div id="xp-bar-container" class="status-xp">
+          <div id="xp-bar"></div>
+        </div>
+        <div id="xp-text">XP: 0/100</div>
+        <!-- RANK VIEW -->
+        <div id="rank-bar-container" class="status-rank">
+          <div id="rank-bar"></div>
+        </div>
+        <div id="rank-text">Rank: 0</div>
+      </div>
+
+      <!-- EVENTS VIEW -->
+      <div id="view-events" class="hidden panel-bg">
+        <div class="panel-header">
+          <span class="panel-header__icon"><i class="fas fa-star u-neon-icon"></i></span>
+          <span class="panel-header__text">EVENTS</span>
+        </div>
+        <div id="events-list"></div>
+      </div>
+      <div id="event-detail-overlay" class="hidden"></div>
+
+      <!-- INVENTORY VIEW -->
+      <div id="view-inventory" class="hidden panel-bg">
+        <div class="panel-header">
+          <span class="panel-header__icon">?</span>
+          <span class="panel-header__text">INVENTORY</span>
+        </div>
+
+        <div class="inventory-panel">
+          <div class="inventory-filters">
+            <button data-filter="key" class="filter-btn">Keys</button>
+            <button data-filter="rune" class="filter-btn">Runes</button>
+          </div>
+          <div class="inventory-grid-container">
+            <div id="inventory-items"></div>
+          </div>
+          <div class="inventory-details hidden">
+            <h3 id="detail-name"></h3>
+            <img id="detail-icon" src="" alt="" />
+
+            <p id="detail-type"></p>
+            <p id="detail-rank"></p>
+            <p id="detail-category"></p>
+            <p id="detail-description"></p>
+            <button id="use-item" class="use-btn">Use</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- INVENTORY DETAIL POPUP -->
+    <div id="inventory-modal" class="inventory-modal hidden">
+      <div class="modal-backdrop"></div>
+      <div class="modal-content">
+        <div class="modal-body">
+          <!-- JS will clone your .inventory-details content in here -->
+        </div>
+      </div>
+    </div>
+
+    <!-- LEAD-NAME MODAL -->
+    <div id="lead-name-modal" class="modal hidden">
+      <div class="modal-backdrop"></div>
+      <!-- 1. Apply panel-bg so it matches quest‐info panels -->
+      <div class="modal-content">
+        <div class="panel-header">
+          <span class="panel-header__icon">!</span>
+          <span class="panel-header__text">NEW QUEST</span>
+        </div>
+        <!-- 2. Use panel-body-text for consistent copy styling -->
+        <input
+          id="lead-name-input"
+          class="panel-body-text"
+          type="text"
+          placeholder="Enter quest name…"
+        />
+        <!-- 3. Center buttons and apply .btn for neon glow -->
+        <div class="modal-actions" style="text-align: center; margin-top: 1rem">
+          <button id="lead-name-cancel" class="btn" type="button">Cancel</button>
+          <button id="lead-name-confirm" class="btn" type="button">OK</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- NOTIFICATION MODAL -->
+    <div id="notification-modal" class="modal hidden">
+      <div class="modal-backdrop"></div>
+
+      <!-- panel-bg gives you the same panel frame (bgd1, borders, padding, rounded corners) -->
+      <div class="modal-content bgd2">
+        <!-- header identical to QUEST INFO / YOUR STATS -->
+        <div class="panel-header">
+          <span class="panel-header__icon">!</span>
+          <span class="panel-header__text">NOTIFICATION</span>
+        </div>
+        <!-- your message, centered and styled like panel body text -->
+        <p id="notification-text" class="panel-body-text">
+          <!-- filled by JS -->
         </p>
-      </a>
-    </section>
-  </main>
-
-  <script type="module" src="script.js"></script>
-
-</body>
-
+        <!-- actions container: centers the buttons -->
+        <div class="modal-actions">
+          <button id="notification-ok" class="btn" type="button">OK</button>
+        </div>
+      </div>
+    </div>
+    <!-- JS ENTRY POINT -->
+    <script type="module" src="js/ui/main.js"></script>
+  </body>
 </html>

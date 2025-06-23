@@ -1,0 +1,49 @@
+@layer components.cooldown-panel;
+
+/* Universal Cooldown Panel */
+#cooldown-panel {
+  margin: var(--space-lg) 0; /* was var(--spacing-lg) */
+  text-align: center;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+}
+
+.cool-label {
+  display: block;
+  font-size: var(--fs-xl); /* ~1.5rem; pick the closest scale step */
+  margin-bottom: var(--space-xs); /* was .4em */
+}
+
+.cool-timer {
+  /* no direct var for 2.6rem, so leave raw (or define a new var if you like) */
+  font-size: 2.6rem;
+}
+
+.cool-unit {
+  font-size: var(--fs-lg); /* ~1.5rem; adjust if you need smaller */
+}
+
+/* blink animation stays the same */
+@keyframes blink10 {
+  0%,
+  100% {
+    color: #f55;
+    text-shadow: var(--shadow-neon-text);
+  }
+
+  50% {
+    color: #fff;
+    text-shadow: none;
+  }
+}
+
+.blink .cool-label,
+.blink .cool-timer,
+.blink .cool-unit {
+  animation: blink10 1s steps(1, end) infinite;
+}
+
+/* you already have .hidden — you can drop this or alias it */
+.u-hidden {
+  display: none !important;
+}

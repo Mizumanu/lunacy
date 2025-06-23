@@ -1,0 +1,25 @@
+@layer components.panel {
+  /* 1) Global game background */
+  body {
+    background: var(--bgd2) center/cover no-repeat fixed;
+  }
+
+  /* 2) All “panel” containers (quests, stats, inventory…) */
+  #stats-container,
+  #view-stats > *,
+  .panel-bg {
+    /* background image */
+    background: var(--bgd1) center/cover no-repeat !important;
+    box-shadow: none !important;
+    border: none !important;
+
+    /* reset the offsets you added before */
+    margin: 0 !important;
+    padding: var(--space-md) !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+
+    /* → add the thin “dim” outline here */
+    position: relative; /* for the outline to hug the box */
+  }
+}

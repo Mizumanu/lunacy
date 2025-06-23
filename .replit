@@ -1,10 +1,11 @@
 run = "vite"
 entrypoint = "index.html"
 hidden = [".config"]
-modules = ["nodejs-18", "web"]
+modules = [ "web", "nodejs-20"]
 
 [nix]
 channel = "stable-23_05"
+packages = ["tree"]
 
 [deployment]
 deploymentTarget = "static"
@@ -14,3 +15,7 @@ publicDir = "dist"
 [[ports]]
 localPort = 5173
 externalPort = 80
+
+[[ports]]
+localPort = 5174
+externalPort = 3000
