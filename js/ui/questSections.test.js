@@ -108,11 +108,13 @@ jest.mock('../quests/ascension/index.js', () => ({
 jest.mock('../quests/daily/picker.js', () => ({
   pickTodaysDaily: () => [{ id: 'd1', title: 'Daily Quest' }],
 }))
-jest.mock('../quests/side/side-helpers.js', () => ({
+jest.mock('../quests/side/index.js', () => ({
   sideQuests: {
     s1: [{ type: 'splash', title: 'AI Copy Critique' }],
     s2: [{ type: 'splash', title: 'The Sleep Architect' }],
   },
+}))
+jest.mock('../quests/side/side-helpers.js', () => ({
   startSideQuest: jest.fn(),
 }))
 
